@@ -52,14 +52,3 @@ exports.getUsers = async (req, res) => {
     res.status(500).json("Server Error");
   }
 };
-
-exports.deleteUser = async (req, res, next) => {
-  try {
-    if (!req.user.isStaff && !req.user._id.equals(req.foundUser._id))
-      return next({ status: 401, message: "u are not a staff" });
-    await User.findByIdAndRemove({ _id: req.foundUser._id });
-    return res.status(204).end();
-  } catch (error) {
-    return next({ status: 400, message: error.message });
-  }
-};
