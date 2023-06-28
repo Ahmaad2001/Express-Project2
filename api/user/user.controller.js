@@ -56,7 +56,7 @@ exports.getUsers = async (req, res) => {
 exports.deleteUser = async (req, res, next) => {
   try {
     if (!req.user.isStaff && !req.user._id.equals(req.foundUser._id))
-      return next({ status: 401, message: "La tsthbl ent mo admin!!!" });
+      return next({ status: 401, message: "u are not a staff" });
     await User.findByIdAndRemove({ _id: req.foundUser._id });
     return res.status(204).end();
   } catch (error) {
