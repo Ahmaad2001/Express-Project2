@@ -43,3 +43,23 @@ exports.signin = async (req, res) => {
     next(error);
   }
 };
+
+exports.getUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(201).json(users);
+  } catch (err) {
+    res.status(500).json("Server Error");
+  }
+};
+
+exports.deleteUser = async (req, res, next) => {
+  try {
+    if (!req.user.isStaff && !req.user._id.equals(req.foundUser._id))
+      return next({ status: 401, message: "La tsthbl ent mo admin!!!" });
+    await User.findByIdAndRemove({ _id: req.foundUser._id });
+    return res.status(204).end();
+  } catch (error) {
+    return next({ status: 400, message: error.message });
+  }
+};
