@@ -5,6 +5,7 @@ const MovieSchema = new Schema({
   actors: { type: Schema.Types.ObjectId, ref: "Actor" },
   genre: { type: Schema.Types.ObjectId, ref: "Genre" },
   releaseDate: { type: String, required: true },
+  isStaff: { type: Boolean, default: true },
 });
 
 module.exports = model("Movie", MovieSchema);
